@@ -1,0 +1,187 @@
+import socket                                                                                                                         
+import db
+import checkin
+import message
+import read
+import check
+import json
+import threading
+import os
+import uuid
+import cmd
+import thread
+import unsent
+import delete
+import ssl
+import get_messages
+import get_nodes
+import time
+
+__version__ = "0.2.1"
+
+class ByteMail:
+    
+    def __init__(self, addr):
+        self.cmds = {
+                "delete":delete.delete,
+                "checkin":checkin.checkin,
+                "message":message.message,
+                "get_messages":get_messages.get_messages,
+                "get_nodes":get_nodes.get_nodes,
+                }
+        self.broker = ("198.147.20.190", 4321)
+        self.addr = addr
+        self.port = 5333
+        self.host = "0.0.0.0"
+        self.open_port = False
+        self.config = {
+                "relay":True
+                }
+    def main(self): 
+        if not db.nodes.find("nodes", "all"):
+            check = self.config['relay']
+            if check:
+                self.open_port = True
+                print "You are running as a relay node."
+            db.data.insert("data", {"port":self.port})
+            print "Downloading Nodes..."
+            self.get_nodes()
+            print "Checking in to nodes..."
+            self.send_checkin()
+            print "Done!"
+        
+        check = self.config['relay']
+        if check:
+            self.open_port = True
+            print "You are running as a relay node."
+        else:
+            print "You are not running as a relay node."
+        if self.open_port:
+            sock = ssl.socket()
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            sock.bind((self.host, self.port))
+            sock.listen(5)
+            while True:
+                obj, conn = sock.accept()
+                threading.Thread(target=self.handle, args=(obj, conn[0])).start()
+        else:
+            while True:
+                check = db.nodes.find("nodes", "all")
+                node = None
+                for x in check:
+                    s = ssl.socket()
+                    try:
+                        s.connect((x['ip'], x['port']))
+                    except:
+                        s.close()
+                        continue
+                    else:
+                        node = (x['ip'], x['port'])
+                        s.close()
+                        break
+
+                sock = ssl.socket()
+                try:
+                    sock.connect(node)
+                except:
+                    continue
+                else:
+                    while True:
+                        try:
+                            get_messages.send_get_messages(x['ip'], x['port'])
+                            get_nodes.send_get_nodes(x['ip'], x['port'])
+                            time.sleep(10)
+                        except Exception, error:
+                            print error
+                            sock.close()
+                            break
+
+    def handle(self, obj, ip):
+        data = obj.recv(102400)
+        if data:
+            data = json.loads(data)
+            self.cmds[data['cmd']](obj, ip, data)
+
+    def send_checkin(self):
+        nodes = db.nodes.find("nodes", "all")
+        for x in nodes:
+            s = ssl.socket()
+            try:
+                s.settimeout(1)
+                s.connect((x['ip'], x['port']))
+                s.send(json.dumps({"cmd":"checkin", "addr":self.addr, "port":self.port}))
+                s.close()
+            except Exception, error:
+                s.close()
+                db.unsent.insert("unsent",  {"to":[x['ip'], x['port']], "message":{"cmd":"checkin", "addr":self.addr, "port":self.port}}) 
+
+    def get_nodes(self):
+        send = {"addr":self.addr, "port":self.port}
+        s = ssl.socket()
+        s.connect(self.broker)
+        s.send(json.dumps(send))
+        with open("nodes.db", 'wb') as file:
+            while True:
+                data = s.recv(1024)
+                if data:
+                    file.write(data)
+                else:
+                    break
+        print "Downloaded Nodes!"
+
+class Prompt(cmd.Cmd):
+    prompt = "ByteMail$ "
+    
+    def do_send(self, line):
+        addr = db.data.find("data", "all")[0]['addr']
+        to = raw_input("To: ")
+        title = raw_input("Title: ")
+        msg = raw_input("Message: ")
+        if not to or not title or not msg:
+            print "You need to fill out all the fields."
+        else:
+            print message.send_msg(msg, title, to, addr)
+    def do_check(self, line):
+        addr = db.data.find("data", "all")[0]['addr']
+        check_ = check.check(addr)
+        if not check_:
+            print "You have no messages."
+        else:
+            for x in check_:
+                print x
+
+    def do_read(self, id):
+        addr = db.data.find("data", "all")[0]['addr']
+        print read.read(id, addr)
+
+    def do_addr(self, line):
+        addr = db.data.find("data", "all")[0]['addr']
+        print "Your address is:", addr
+
+    def do_delete(self, line):
+        addr = db.data.find("data", "all")[0]['addr']
+        print delete.send_delete(line, addr)
+
+    def do_exit(self, line):
+        print "Bye!"
+        exit()
+
+if __name__ == "__main__":
+    exists = db.data.find("data", "all")
+    if not exists:
+        print "First time running ByteMail"
+        db.data.insert("data", {"addr":uuid.uuid4().hex})
+        db.messages.insert("messages", {})
+        addr = db.data.find("data", "all")[0]['addr']
+    else:
+        addr = db.data.find("data", "all")[0]['addr']
+
+    b = ByteMail(addr)
+    c = Prompt()
+    thread.start_new_thread(b.main, ())
+    thread.start_new_thread(unsent.unsent, ())
+    while True:
+        try:
+            c.cmdloop()
+        except KeyboardInterrupt:
+            continue
