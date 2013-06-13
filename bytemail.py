@@ -16,8 +16,9 @@ import ssl
 import get_messages
 import get_nodes
 import time
+import random
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 class ByteMail:
     
@@ -35,7 +36,7 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":True
+                "relay":False
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
@@ -67,6 +68,7 @@ class ByteMail:
         else:
             while True:
                 check = db.nodes.find("nodes", "all")
+                random.shuffle(check)
                 node = None
                 for x in check:
                     s = ssl.socket()
@@ -92,7 +94,6 @@ class ByteMail:
                             get_nodes.send_get_nodes(x['ip'], x['port'])
                             time.sleep(10)
                         except Exception, error:
-                            print error
                             sock.close()
                             break
 

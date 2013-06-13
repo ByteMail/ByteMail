@@ -1,3 +1,9 @@
+Version 0.2.2 Beta
+
+- Delete command fixed, and now working.
+- No more collision of message IDs
+- When a node is running outbound connections only the list of nodes is randomized to keep the load distributed
+
 Version 0.2.1 Beta
 
 - Delete command now deletes message on all nodes.

@@ -3,25 +3,25 @@ import ssl
 import json
 
 def delete(obj, ip, data):
-    message = db.messages.find("messages", {"to":addr,"id":id})
-    for x in messages:
-        if x['to'] == data['to'] and x['id'] == id:
-            db.messages.remove("messages", x)
-            break
+    message = db.messages.find("messages", {"id":data['id']})
+    try: 
+        db.messages.remove("messages", message[0])
+    except IndexError:
+        pass
 
-
-def send_delete(addr, id):
-    message = db.messages.find("messages", {"to":addr,"id":id})
+def send_delete(id, addr):
+    message = db.messages.find("messages", {"id":id})
     if not message:
         return "Message with that ID doesn't exist."
     else:
-        nodes = db.nodes.find("messages", "all")
+        db.messages.remove("messages", message[0])
+        nodes = db.nodes.find("nodes", "all")
         for x in nodes:
             try:
                 sock = ssl.socket()
                 sock.connect((x['ip'], x['port']))
                 sock.send(json.dumps({"cmd":"delete", "to":addr, "id":id}))
             except:
-                db.unsent.insert("unsent", {"cmd":"delete", "addr":addr, "id":id})
+                db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"delete", "addr":addr, "id":id}})
             sock.close()
         return "Message Removed!"
