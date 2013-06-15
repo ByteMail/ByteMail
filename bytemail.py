@@ -19,7 +19,7 @@ import time
 import random
 import rsa
 
-__version__ = "0.2.2"
+__version__ = "0.2.5"
 
 class ByteMail:
     
