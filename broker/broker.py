@@ -18,7 +18,7 @@ class Broker:
             obj, conn = s.accept()
             threading.Thread(target=self.handle, args=(obj, conn[0])).start()
     def handle(self, obj, ip):
-        data = obj.recv(1024)
+        data = obj.recv(1024000)
         print data
         if data:
             data = json.loads(data)
