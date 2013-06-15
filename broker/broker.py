@@ -28,8 +28,7 @@ class Broker:
             if len(addr) == 32:
                 self.db.insert("nodes", {"addr":addr, "ip":ip, "port":port, "publickey":pubkey})
                 with open("nodes.db", 'r') as file:
-                    for x in file.readlines():
-                        obj.send(x)
+                    obj.sendall(file.read())
                     obj.close()
             else:
                 obj.close()

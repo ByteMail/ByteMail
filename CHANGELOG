@@ -1,3 +1,7 @@
+Version 0.2.51 Beta
+
+- Bug fix in broker
+
 Version 0.2.5 Beta * Major Update
 
 - Encryption has now been added to messages! It's about time!
