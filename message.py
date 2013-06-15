@@ -22,8 +22,11 @@ def send_msg(msg, title, to, addr):
         data = db.nodes.find("nodes", {"addr":to})[0]
     except:
         return "Address doesn't exist"
-    msg = encrypt(msg, eval(data['publickey']))
-    msg = base64.b64encode(msg)
+    if data['publickey'].startswith("PublicKey(") and data['publickey'].endswith(")"):
+        msg = encrypt(msg, eval(data['publickey']))
+        msg = base64.b64encode(msg)
+    else:
+        return "Invalid public key for", addr
     id = ""
     while True:
         id = uuid.uuid4().hex

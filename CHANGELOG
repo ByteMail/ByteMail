@@ -1,5 +1,6 @@
-Version 0.2.51 Beta
+Version 0.2.6 Beta
 
+- eval() exploit now fixed.
 - Bug fix in broker
 
 Version 0.2.5 Beta * Major Update

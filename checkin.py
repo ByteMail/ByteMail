@@ -12,5 +12,6 @@ def checkin(obj, ip, data):
             check = True
 
     if not check and len(data['addr']) == 32:
-        db.nodes.insert("nodes", {"addr":data['addr'], 'ip':ip, 'port':data['port'], "publickey":data['publickey']})
-        print data['addr'], "checked in"
+        if data['publickey'].startswith("PublicKey(") and data['publickey'].endswith(")"):
+            db.nodes.insert("nodes", {"addr":data['addr'], 'ip':ip, 'port':data['port'], "publickey":data['publickey']})
+            print data['addr'], "checked in"
