@@ -5,7 +5,7 @@ import base64
 def read(id, addr):
     data = db.messages.find("messages", {"to":addr})
     my_key = db.data.find("data", "all")[0]["privatekey"]
-    if mey_key.startswith("PublicKey(") and my_key.endswith(")"):
+    if my_key.startswith("PublicKey(") and my_key.endswith(")"):
         my_key = eval(my_key)
     else:
         return "You have an invalid key."
