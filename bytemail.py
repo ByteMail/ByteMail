@@ -17,12 +17,13 @@ import get_messages
 import get_nodes
 import time
 import random
+import rsa
 
 __version__ = "0.2.2"
 
 class ByteMail:
     
-    def __init__(self, addr):
+    def __init__(self, addr, pubkey):
         self.cmds = {
                 "delete":delete.delete,
                 "checkin":checkin.checkin,
@@ -30,8 +31,9 @@ class ByteMail:
                 "get_messages":get_messages.get_messages,
                 "get_nodes":get_nodes.get_nodes,
                 }
-        self.broker = ("198.147.20.190", 4321)
+        self.broker = ("", 4321)
         self.addr = addr
+        self.pubkey = pubkey
         self.port = 5333
         self.host = "0.0.0.0"
         self.open_port = False
@@ -110,14 +112,14 @@ class ByteMail:
             try:
                 s.settimeout(1)
                 s.connect((x['ip'], x['port']))
-                s.send(json.dumps({"cmd":"checkin", "addr":self.addr, "port":self.port}))
+                s.send(json.dumps({"cmd":"checkin", "addr":self.addr, "port":self.port, "publickey":self.pubkey}))
                 s.close()
             except Exception, error:
                 s.close()
-                db.unsent.insert("unsent",  {"to":[x['ip'], x['port']], "message":{"cmd":"checkin", "addr":self.addr, "port":self.port}}) 
+                db.unsent.insert("unsent",  {"to":[x['ip'], x['port']], "message":{"cmd":"checkin", "addr":self.addr, "port":self.port, "publickey":self.pubkey}}) 
 
     def get_nodes(self):
-        send = {"addr":self.addr, "port":self.port}
+        send = {"addr":self.addr, "port":self.port, "publickey":self.pubkey}
         s = ssl.socket()
         s.connect(self.broker)
         s.send(json.dumps(send))
@@ -171,13 +173,19 @@ if __name__ == "__main__":
     exists = db.data.find("data", "all")
     if not exists:
         print "First time running ByteMail"
-        db.data.insert("data", {"addr":uuid.uuid4().hex})
+        print "Generating new keys... This could take a while."
+        publickey, privatekey = rsa.newkeys(4056)
+        db.data.insert("data", {"addr":uuid.uuid4().hex, "publickey":str(publickey), "privatekey":str(privatekey)})
         db.messages.insert("messages", {})
-        addr = db.data.find("data", "all")[0]['addr']
+        data = db.data.find("data", "all")[0]
+        addr = data['addr']
+        pubkey = data['publickey']
     else:
-        addr = db.data.find("data", "all")[0]['addr']
+        data = db.data.find("data", "all")[0]
+        addr = data['addr']
+        pubkey = data['publickey']
 
-    b = ByteMail(addr)
+    b = ByteMail(addr, pubkey)
     c = Prompt()
     thread.start_new_thread(b.main, ())
     thread.start_new_thread(unsent.unsent, ())

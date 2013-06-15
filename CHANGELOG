@@ -1,3 +1,10 @@
+Version 0.2.5 Beta * Major Update
+
+- Encryption has now been added to messages! It's about time!
+- Broker now transfers your public key as well
+- On start a 4056 pubkey is created (may need to be edited)
+
+
 Version 0.2.2 Beta
 
 - Delete command fixed, and now working.

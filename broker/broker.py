@@ -23,9 +23,10 @@ class Broker:
         if data:
             data = json.loads(data)
             port = data['port']
+            pubkey = data['publickey']
             addr = data['addr'].replace("\n", '').replace(" ", '')
             if len(addr) == 32:
-                self.db.insert("nodes", {"addr":addr, "ip":ip, "port":port})
+                self.db.insert("nodes", {"addr":addr, "ip":ip, "port":port, "publickey":pubkey})
                 with open("nodes.db", 'r') as file:
                     for x in file.readlines():
                         obj.send(x)

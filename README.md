@@ -6,4 +6,4 @@ Peer-to-peer Email Protocol
 Info
 ----
 
-As of right now there is no hole punching, or UPnP implemented. In order to use ByteMail port 5333 must be home.
+If you would like to help out the ByteMail network, open port 5333 and set the relay config to True in bytemail.py

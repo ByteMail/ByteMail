@@ -2,6 +2,8 @@ import db
 import ssl
 import json
 import uuid
+from rsa import *
+import base64
 
 def message(obj, ip, data):
     addr = db.data.find("data", "all")[0]['addr']
@@ -20,7 +22,8 @@ def send_msg(msg, title, to, addr):
         data = db.nodes.find("nodes", {"addr":to})[0]
     except:
         return "Address doesn't exist"
-    
+    msg = encrypt(msg, eval(data['publickey']))
+    msg = base64.b64encode(msg)
     id = ""
     while True:
         id = uuid.uuid4().hex

@@ -1,7 +1,11 @@
 import db
+from rsa import *
+import base64
 
 def read(id, addr):
     data = db.messages.find("messages", {"to":addr})
+    my_key = db.data.find("data", "all")[0]["privatekey"]
+    my_key = eval(my_key)
     for x in data:
         try:
             if x['id'] == id:
@@ -14,7 +18,7 @@ def read(id, addr):
                 {3}
 
 
-                """.format(x['id'], x['from'], x['title'], x['message'])
+                """.format(x['id'], x['from'], x['title'], decrypt(base64.b64decode(x['message']), my_key))
                 return msg
 
         except KeyError:
