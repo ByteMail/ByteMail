@@ -4,7 +4,8 @@ import db
 
 def get_messages(obj, ip, data):
     with open("messages.db", 'rb') as file:
-        obj.sendall(file.read())
+        for x in file.readlines():
+            obj.send(x)
     obj.close()
 
 

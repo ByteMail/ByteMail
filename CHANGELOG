@@ -1,15 +1,6 @@
-Version 0.2.63 Beta
+Version 0.2.7 Beta
 
-- get_nodes now uses sendall
-- get_messages now uses sendall
-
-Version 0.2.62 Beta
-
-- Fixed message double sending bug
-
-Version 0.2.61 Beta
-
-- Fixed send bug
+- Proof-of-Work has been added
 
 Version 0.2.6 Beta
 

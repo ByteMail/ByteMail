@@ -4,7 +4,8 @@ import db
 
 def get_nodes(obj, ip, data):
     with open("nodes.db", 'rb') as file:
-        obj.sendall(file.read())
+        for x in file.readlines():
+            obj.send(x)
     obj.close()
 
 

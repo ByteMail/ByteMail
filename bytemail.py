@@ -19,7 +19,7 @@ import time
 import random
 import rsa
 
-__version__ = "0.2.63"
+__version__ = "0.2.7"
 
 class ByteMail:
     
@@ -38,7 +38,7 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":True
+                "relay":False
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     if not exists:
         print "First time running ByteMail"
         print "Generating new keys... This could take a while."
-        publickey, privatekey = rsa.newkeys(4056)
+        publickey, privatekey = rsa.newkeys(4096)
         db.data.insert("data", {"addr":uuid.uuid4().hex, "publickey":str(publickey), "privatekey":str(privatekey)})
         db.messages.insert("messages", {})
         data = db.data.find("data", "all")[0]
