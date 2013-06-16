@@ -13,9 +13,11 @@ def message(obj, ip, data):
     to = data['to']
     id = data['id']
     if len(from_) == 32 and len(to) == 32:
-        db.messages.insert("messages", {"id":id, "message":msg, "from":from_, "title":title, "to":to})
-        if to == addr:
-            print "\nYou have a new message from", from_
+        check = db.messages.find("messages", {"id":id})
+        if not check:
+            db.messages.insert("messages", {"id":id, "message":msg, "from":from_, "title":title, "to":to})
+            if to == addr:
+                print "\nYou have a new message from", from_
 
 def send_msg(msg, title, to, addr):
     try:
