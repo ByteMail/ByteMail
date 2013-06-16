@@ -22,6 +22,7 @@ def send_msg(msg, title, to, addr):
         data = db.nodes.find("nodes", {"addr":to})[0]
     except:
         return "Address doesn't exist"
+    msg = ""
     if data['publickey'].startswith("PublicKey(") and data['publickey'].endswith(")"):
         msg = encrypt(msg, eval(data['publickey']))
         msg = base64.b64encode(msg)

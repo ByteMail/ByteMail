@@ -1,3 +1,7 @@
+Version 0.2.61 Beta
+
+- Fixed send bug
+
 Version 0.2.6 Beta
 
 - eval() exploit now fixed.
