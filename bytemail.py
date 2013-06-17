@@ -18,8 +18,8 @@ import get_nodes
 import time
 import random
 import rsa
-
-__version__ = "0.2.7"
+import addressbook
+__version__ = "0.2.8"
 
 class ByteMail:
     
@@ -38,7 +38,7 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":False
+                "relay":True
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
@@ -138,12 +138,18 @@ class Prompt(cmd.Cmd):
     def do_send(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         to = raw_input("To: ")
+	if len(to) != 32:
+		if len(str(addressbook.check_entry(to))) != 32:
+			print "Address Invalid."
+			return
+		else:
+			to = str(addressbook.check_entry(to))
         title = raw_input("Title: ")
         msg = raw_input("Message: ")
         if not to or not title or not msg:
             print "You need to fill out all the fields."
         else:
-            print message.send_msg(msg, title, to, addr)
+	    print message.send_msg(msg, title, to, addr)
     def do_check(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         check_ = check.check(addr)
@@ -160,6 +166,11 @@ class Prompt(cmd.Cmd):
     def do_addr(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         print "Your address is:", addr
+
+    def do_add_address(self, line):
+	name = raw_input("Name:")
+	address = raw_input("Address:")
+	addressbook.add_entry(name,address)
 
     def do_delete(self, line):
         addr = db.data.find("data", "all")[0]['addr']

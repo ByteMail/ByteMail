@@ -1,6 +1,7 @@
 import db
 from rsa import *
 import base64
+import aes
 
 def read(id, addr):
     data = db.messages.find("messages", {"to":addr})
@@ -11,6 +12,7 @@ def read(id, addr):
         return "You have an invalid key."
     for x in data:
         try:
+            aeskey = decrypt(base64.b64decode(x['key']), my_key)
             if x['id'] == id:
                 msg = """
 
@@ -21,7 +23,7 @@ def read(id, addr):
                 {3}
 
 
-                """.format(x['id'], x['from'], x['title'], decrypt(base64.b64decode(x['message']), my_key))
+                """.format(x['id'], x['from'], x['title'], aes.decryptData(aeskey, base64.b64decode(x['message'])))
                 return msg
 
         except KeyError:
