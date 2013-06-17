@@ -149,7 +149,7 @@ class Prompt(cmd.Cmd):
         if not to or not title or not msg:
             print "You need to fill out all the fields."
         else:
-            print message.send_msg(msg, title, to, addr)
+	    print message.send_msg(msg, title, to, addr)
     def do_check(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         check_ = check.check(addr)

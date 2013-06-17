@@ -16,14 +16,11 @@ def message(obj, ip, data):
     as_nonce = data['nonce']
     as_num = data['num']
     key = data['key']
-    if antispam.check_antispam(to,from_,msg,as_num,as_nonce):
+    if antispam.check_antispam(to,from_,msg,as_num,as_nonce,antispam.get_required_difficulty(msg)):
 	    if len(from_) == 32 and len(to) == 32:
-	        db.messages.insert("messages", {"id":id, "message":msg, "from":from_, "title":title, "to":to,"as_num":as_num,"as_nonce":as_nonce,"key":key})
+        	db.messages.insert("messages", {"id":id, "message":msg, "from":from_, "title":title, "to":to,"as_num":as_num,"as_nonce":as_nonce,"key":key})
 	        if to == addr:
-        	    print "\nYou have a new message from", from_
-    else:
-	    print "Blocked some spam."
-
+       		    print "\nYou have a new message from", from_
 def send_msg(msg, title, to, addr):
     try:
         data = db.nodes.find("nodes", {"addr":to})[0]
@@ -36,7 +33,7 @@ def send_msg(msg, title, to, addr):
 	key = base64.b64encode(key) # Base64 encode the key
 	msg = aes.encryptData(aeskey,msg) # Encrypt Message with AES Key
         msg = base64.b64encode(msg) # Base64 encode the message
-	as_num, as_nonce = antispam.find_antispam(to,addr,msg)
+	as_num, as_nonce = antispam.find_antispam(to,addr,msg,antispam.get_required_difficulty(msg))
     else:
         return "Invalid public key for", addr
     id = ""
