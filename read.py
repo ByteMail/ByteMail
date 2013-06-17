@@ -11,7 +11,7 @@ def read(id, addr):
     else:
         return "You have an invalid key."
     for x in data:
-       # try:
+        try:
             aeskey = decrypt(base64.b64decode(x['key']), my_key)
             if x['id'] == id:
                 msg = """
@@ -26,7 +26,7 @@ def read(id, addr):
                 """.format(x['id'], x['from'], x['title'], aes.decryptData(aeskey, base64.b64decode(x['message'])))
                 return msg
 
-      #  except Exception:
-      #      return x
+        except KeyError:
+            continue
 
     return "Message with that ID doesn't exist"
