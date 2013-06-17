@@ -43,7 +43,7 @@ def send_msg(msg, title, to, addr):
             continue
         else:
             break
-    print "Sending message ID " + id + "with key " + key
+    print "Sending message ID " + id + " with key " + key
     nodes = db.nodes.find("nodes", "all")
     for x in nodes:
         s = ssl.socket()

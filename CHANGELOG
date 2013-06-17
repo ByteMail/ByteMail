@@ -1,3 +1,7 @@
+Version 0.2.81 Beta
+
+- Spelling errors
+
 Version 0.2.8 Beta
 
 - RSA is now working side by side with AES so that there is no message limit
