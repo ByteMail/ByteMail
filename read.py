@@ -20,7 +20,7 @@ def read(id, addr):
                 From: {1}
                 Title: {2}
 
-                {3}
+{3}
 
 
                 """.format(x['id'], x['from'], x['title'], aes.decryptData(aeskey, base64.b64decode(x['message'])))
