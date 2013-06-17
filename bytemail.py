@@ -18,8 +18,8 @@ import get_nodes
 import time
 import random
 import rsa
-
-__version__ = "0.2.7"
+import addressbook
+__version__ = "0.2.7.1"
 
 class ByteMail:
     
@@ -138,6 +138,12 @@ class Prompt(cmd.Cmd):
     def do_send(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         to = raw_input("To: ")
+	if len(to) != 32:
+		if len(str(addressbook.check_entry(to))) != 32:
+			print "Address Invalid."
+			return
+		else:
+			to = str(addressbook.check_entry(to))
         title = raw_input("Title: ")
         msg = raw_input("Message: ")
         if not to or not title or not msg:
@@ -160,6 +166,11 @@ class Prompt(cmd.Cmd):
     def do_addr(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         print "Your address is:", addr
+
+    def do_add_address(self, line):
+	name = raw_input("Name:")
+	address = raw_input("Address:")
+	addressbook.add_entry(name,address)
 
     def do_delete(self, line):
         addr = db.data.find("data", "all")[0]['addr']
