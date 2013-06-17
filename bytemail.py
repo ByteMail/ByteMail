@@ -39,7 +39,7 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":False
+                "relay":True
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
@@ -169,8 +169,8 @@ class Prompt(cmd.Cmd):
         print "Your address is:", addr
 
     def do_add_address(self, line):
-	name = raw_input("Name:")
-	address = raw_input("Address:")
+	name = raw_input("Name: ")
+	address = raw_input("Address: ")
 	addressbook.add_entry(name,address)
 
     def do_delete(self, line):
