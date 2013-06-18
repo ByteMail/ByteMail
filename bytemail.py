@@ -20,7 +20,7 @@ import random
 import rsa
 import addressbook
 
-__version__ = "0.2.82"
+__version__ = "0.2.83"
 
 class ByteMail:
     
@@ -152,6 +152,8 @@ class Prompt(cmd.Cmd):
             print "You need to fill out all the fields."
         else:
 	    print message.send_msg(msg, title, to, addr)
+    def help_send(self):
+        print "Sends a message."
     def do_check(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         check_ = check.check(addr)
@@ -160,27 +162,43 @@ class Prompt(cmd.Cmd):
         else:
             for x in check_:
                 print x
+    def help_check(self):
+        print "Displays a list of messages"
 
     def do_read(self, id):
         addr = db.data.find("data", "all")[0]['addr']
         print read.read(id, addr)
 
+    def help_read(self):
+        print "Usage: read <id>"
+        print "Reads the specified message ID"
+
     def do_addr(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         print "Your address is:", addr
+
+    def help_addr(self):
+        print "Displays your ByteMail address"
 
     def do_add_address(self, line):
 	name = raw_input("Name: ")
 	address = raw_input("Address: ")
 	addressbook.add_entry(name,address)
+    def help_add_address(self):
+        print "Adds an address to your address book"
 
     def do_delete(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         print delete.send_delete(line, addr)
+    def help_delete(self):
+        print "Usage: delete <id>"
+        print "Deletes the message with the specified ID"
 
     def do_exit(self, line):
         print "Bye!"
         exit()
+    def help_exit(self):
+        print "Closes ByteMail."
 
 if __name__ == "__main__":
     exists = db.data.find("data", "all")
