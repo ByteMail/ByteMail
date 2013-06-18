@@ -20,7 +20,7 @@ import random
 import rsa
 import addressbook
 
-__version__ = "0.2.84"
+__version__ = "0.2.85"
 
 class ByteMail:
     
@@ -40,7 +40,6 @@ class ByteMail:
         self.open_port = False
         self.config = {
                 "relay":False
-
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
