@@ -39,7 +39,7 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":False
+                "relay":True
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
@@ -103,8 +103,12 @@ class ByteMail:
     def handle(self, obj, ip):
         data = obj.recv(102400)
         if data:
-            data = json.loads(data)
-            self.cmds[data['cmd']](obj, ip, data)
+            try:
+                data = json.loads(data)
+            except ValueError:
+                obj.close()
+            else:
+                self.cmds[data['cmd']](obj, ip, data)
 
     def send_checkin(self):
         nodes = db.nodes.find("nodes", "all")
