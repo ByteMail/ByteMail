@@ -19,6 +19,7 @@ def send_delete(id, addr):
         for x in nodes:
             try:
                 sock = ssl.socket()
+                sock.settimeout(1)
                 sock.connect((x['ip'], x['port']))
                 sock.send(json.dumps({"cmd":"delete", "to":addr, "id":id}))
             except:

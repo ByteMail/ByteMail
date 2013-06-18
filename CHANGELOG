@@ -1,5 +1,6 @@
 Version 0.2.82 Beta
 
+- Added timeout to delete.py
 - User is no longer notified when a node "checks in"
 - General bug fixes
 
