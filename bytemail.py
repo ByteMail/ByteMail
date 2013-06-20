@@ -39,7 +39,7 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":False
+                "relay":True
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
@@ -138,9 +138,9 @@ class ByteMail:
         print "Downloaded Nodes!"
 
 class Prompt(cmd.Cmd):
-    prompt = "ByteMail$ "
-    
+    prompt = "ByteMail$ " 
     def do_send(self, line):
+        self.lastcmd = ""
         addr = db.data.find("data", "all")[0]['addr']
         to = raw_input("To: ")
         if to == "":
@@ -157,8 +157,10 @@ class Prompt(cmd.Cmd):
             print "You need to fill out all the fields."
         else:
 	    print message.send_msg(msg, title, to, addr)
+
     def help_send(self):
         print "Sends a message."
+        self.lastcmd = ""
     def do_check(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         check_ = check.check(addr)
@@ -167,24 +169,25 @@ class Prompt(cmd.Cmd):
         else:
             for x in check_:
                 print x
+        self.lastcmd = ""
     def help_check(self):
         print "Displays a list of messages"
-
+        self.lastcmd = ""
     def do_read(self, id):
         addr = db.data.find("data", "all")[0]['addr']
         print read.read(id, addr)
-
+        self.lastcmd = ""
     def help_read(self):
         print "Usage: read <id>"
         print "Reads the specified message ID"
-
+        self.lastcmd = ""
     def do_addr(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         print "Your address is:", addr
-
+        self.lastcmd = ""
     def help_addr(self):
         print "Displays your ByteMail address"
-
+        self.lastcmd = ""
     def do_add_address(self, line):
 	name = raw_input("Name: ")
 	address = raw_input("Address: ")
