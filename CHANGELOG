@@ -1,3 +1,7 @@
+Version 0.2.86 Beta
+
+- Fixed invalid "To: " field bug
+
 Version 0.2.85 Beta
 
 - Fixed long message error bug

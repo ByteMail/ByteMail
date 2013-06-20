@@ -143,12 +143,14 @@ class Prompt(cmd.Cmd):
     def do_send(self, line):
         addr = db.data.find("data", "all")[0]['addr']
         to = raw_input("To: ")
-	if len(to) != 32:
-		if len(str(addressbook.check_entry(to))) != 32:
-			print "Address Invalid."
-			return
-		else:
-			to = str(addressbook.check_entry(to))
+        if to == "":
+            return "You must fill out the field."
+        if len(to) != 32:
+            if len(str(addressbook.check_entry(to))) != 32:
+                print "Address Invalid."
+                return
+            else:
+                to = str(addressbook.check_entry(to))
         title = raw_input("Title: ")
         msg = raw_input("Message: ")
         if not to or not title or not msg:
