@@ -20,7 +20,7 @@ import random
 import rsa
 import addressbook
 
-__version__ = "0.2.86"
+__version__ = "0.2.87"
 
 class ByteMail:
     
@@ -204,6 +204,13 @@ class Prompt(cmd.Cmd):
         self.lastcmd = ""
         print "Usage: delete <id>"
         print "Deletes the message with the specified ID"
+
+    def do_purge(self,line):
+        print "Purging..."
+        addr = db.data.find("data", "all")[0]['addr']
+        print delete.send_delete_all(addr)
+    def help_purge(self):
+        print "Deletes all messages sent to this node."
 
     def do_exit(self, line):
         print "Bye!"

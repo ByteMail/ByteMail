@@ -26,3 +26,12 @@ def send_delete(id, addr):
                 db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"delete", "addr":addr, "id":id}})
             sock.close()
         return "Message Removed!"
+
+def send_delete_all(addr):
+    messages = db.messages.find("messages", {"to":addr})
+    if not messages:
+        return "No messages to delete!"
+    else:
+        for msg in messages:
+            send_delete(msg['id'],addr)
+    return "Success!"
