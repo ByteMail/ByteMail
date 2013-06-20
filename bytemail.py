@@ -189,16 +189,19 @@ class Prompt(cmd.Cmd):
         print "Displays your ByteMail address"
         self.lastcmd = ""
     def do_add_address(self, line):
-	name = raw_input("Name: ")
-	address = raw_input("Address: ")
-	addressbook.add_entry(name,address)
+        self.lastcmd = ""	
+        name = raw_input("Name: ")
+        address = raw_input("Address: ")
+        addressbook.add_entry(name,address)
     def help_add_address(self):
         print "Adds an address to your address book"
 
     def do_delete(self, line):
+        self.lastcmd = ""
         addr = db.data.find("data", "all")[0]['addr']
         print delete.send_delete(line, addr)
     def help_delete(self):
+        self.lastcmd = ""
         print "Usage: delete <id>"
         print "Deletes the message with the specified ID"
 
@@ -206,6 +209,7 @@ class Prompt(cmd.Cmd):
         print "Bye!"
         exit()
     def help_exit(self):
+        self.lastcmd = ""
         print "Closes ByteMail."
 
 if __name__ == "__main__":
