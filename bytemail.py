@@ -20,7 +20,7 @@ import random
 import rsa
 import addressbook
 
-__version__ = "0.2.87"
+__version__ = "0.2.88"
 
 class ByteMail:
     
@@ -101,7 +101,11 @@ class ByteMail:
                             break
 
     def handle(self, obj, ip):
-        data = obj.recv(102400)
+        try:
+            data = obj.recv(102400)
+        except:
+            obj.close()
+            return
         if data:
             try:
                 data = json.loads(data)

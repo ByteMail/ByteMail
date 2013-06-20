@@ -1,3 +1,7 @@
+Version 0.2.88 Beta
+
+- Fixed Connection reset by peer error
+
 Version 0.2.87 Beta
 
 - Added purge command to delete all messages sent to the node
