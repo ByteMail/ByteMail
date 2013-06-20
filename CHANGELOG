@@ -1,3 +1,7 @@
+Version 0.2.87 Beta
+
+- Added purge command to delete all messages sent to the node
+
 Version 0.2.86 Beta
 
 - When enter is pressed the previous command is no longer executed
