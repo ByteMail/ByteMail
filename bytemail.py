@@ -20,7 +20,7 @@ import random
 import rsa
 import addressbook
 
-__version__ = "0.2.85"
+__version__ = "0.2.86"
 
 class ByteMail:
     
