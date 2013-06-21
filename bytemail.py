@@ -20,7 +20,7 @@ import random
 import rsa
 import addressbook
 
-__version__ = "0.2.88"
+__version__ = "0.2.89"
 
 class ByteMail:
     
@@ -39,7 +39,7 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":False
+                "relay":True
                 }
     def main(self): 
         if not db.nodes.find("nodes", "all"):
@@ -197,6 +197,12 @@ class Prompt(cmd.Cmd):
         name = raw_input("Name: ")
         address = raw_input("Address: ")
         addressbook.add_entry(name,address)
+    def help_addresses(self, line):
+        self.lastcmd = ""
+        print "Shows all addresses in your address book"
+    def do_addresses(self, line):
+        self.lastcmd = ""
+        print addressbook.addresses()
     def help_add_address(self):
         print "Adds an address to your address book"
 

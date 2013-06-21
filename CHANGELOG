@@ -1,3 +1,8 @@
+Version 0.2.89 Beta
+
+- Blank entries can no longer be inserted into the addressbook.db
+- Added new command "addresses" shows all addresses in your address book
+
 Version 0.2.88 Beta
 
 - Fixed Connection reset by peer error
