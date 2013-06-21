@@ -1,3 +1,7 @@
+Version 0.3.00 Beta
+
+- Added RSA Signatures to messages & message deleations
+
 Version 0.2.89 Beta
 
 - Blank entries can no longer be inserted into the addressbook.db

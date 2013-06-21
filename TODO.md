@@ -11,6 +11,7 @@ Short Term
 Long Term
 ---------
 
+* Improve psuedo-anonymity by seperating addresses from nodes
 * GUI (although ByteMail is mainly supposed to be command-line based, it is always nice to have a GUI for ease of use)
 * Create a Wiki
 * Better message database management
