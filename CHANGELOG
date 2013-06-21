@@ -1,3 +1,8 @@
+Version 0.3.1 Beta
+
+- Fixed RSA signature bug
+- Added version command
+
 Version 0.3.00 Beta
 
 - Added RSA Signatures to messages & message deleations

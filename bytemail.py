@@ -20,7 +20,7 @@ import random
 import rsa
 import addressbook
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 class ByteMail:
     
@@ -161,7 +161,9 @@ class Prompt(cmd.Cmd):
             print "You need to fill out all the fields."
         else:
 	    print message.send_msg(msg, title, to, addr)
-
+    def do_version(self, line):
+        print __version__
+        self.lastcmd = ""
     def help_send(self):
         print "Sends a message."
         self.lastcmd = ""
