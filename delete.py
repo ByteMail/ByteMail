@@ -32,7 +32,7 @@ def send_delete(id, addr):
                 sock.connect((x['ip'], x['port']))
                 sock.send(json.dumps({"cmd":"delete", "to":addr, "id":id, "signature":signature}))
             except:
-                db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"delete", "addr":addr, "id":id, "signature":signature}})
+                db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"delete", "to":addr, "id":id, "signature":signature}})
             sock.close()
        return "Message Removed!"
 
