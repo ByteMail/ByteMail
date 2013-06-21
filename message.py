@@ -66,7 +66,7 @@ def send_msg(msg, title, to, addr):
         s = ssl.socket()
         try:
             s.settimeout(1)
-            s.connect(("127.0.0.1", x['port']))
+            s.connect((x['ip'], x['port']))
             s.send(json.dumps({"cmd":"message", "id":id, "message":msg, "title":title, "to":to, "from":addr,"num":as_num,"nonce":as_nonce,"key":key,"signature":signature}))
             s.close()
         except Exception, error:

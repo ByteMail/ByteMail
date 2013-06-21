@@ -29,7 +29,7 @@ def send_delete(id, addr):
             try:
                 sock = ssl.socket()
                 sock.settimeout(1)
-                sock.connect((x['id'], x['port']))
+                sock.connect((x['ip'], x['port']))
                 sock.send(json.dumps({"cmd":"delete", "to":addr, "id":id, "signature":signature}))
             except:
                 db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"delete", "addr":addr, "id":id, "signature":signature}})
