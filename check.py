@@ -5,6 +5,11 @@ def check(addr):
     b = db.messages.find("messages", {"to":addr})
     if b:
         for x in b:
+            try:
+                time_ = x['time']
+            except Exception, error:
+                time_ = "Unknown"
+
             if "message" in x:
                 message = """
             
@@ -13,6 +18,6 @@ def check(addr):
             From: {0}
             Title: {1}
 
-                """.format(x['from'], x['title'], x['id'], x['time'])
+                """.format(x['from'], x['title'], x['id'], time_)
                 messages.append(message)
     return messages
