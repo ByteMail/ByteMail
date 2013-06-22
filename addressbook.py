@@ -35,7 +35,7 @@ def addresses():
         for y in x:
             name = y
             addr = x[y]
-        a = "{0} {1}\n".format(name, addr)
+        a = "\t{0} {1}\n".format(name, addr)
         addresses_ = addresses_ + a
     return addresses_
 
