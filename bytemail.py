@@ -21,7 +21,7 @@ import rsa
 import addressbook
 import sent
 
-__version__ = "0.3.22"
+__version__ = "0.3.23"
 
 class ByteMail:
     
