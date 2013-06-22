@@ -49,12 +49,14 @@ def message(obj, ip, data):
 	        db.messages.insert("messages", message)
             if to == addr:
                 check = db.addressdb.find("addresses", 'all')
+                done = False
                 for x in check:
                     for y in x:
                         if x[y] == from_:
                             print "\nYou have a new message from", y
-                            return
-       		    print "\nYou have a new message from", from_
+                            done = True
+                if not done:
+       		        print "\nYou have a new message from", from_
 def send_msg(msg, title, to, addr):
     # Copied and pasted from read.py
     my_key = db.data.find("data", "all")[0]["privatekey"]
