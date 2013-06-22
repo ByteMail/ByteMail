@@ -1,6 +1,7 @@
 Version 0.3.23 Beta
 
 - When a new message is received instead of displaying the address it will display the name you assigned to that address, assuming the address is in your addressbook (only applies to relay nodes)
+- Added sent_purge command, deletes all entries in the sent database
 
 Version 0.3.22 Beta
 

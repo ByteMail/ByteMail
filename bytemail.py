@@ -246,7 +246,12 @@ class Prompt(cmd.Cmd):
     def do_remove_address(self, line):
         self.lastcmd = ""
         print addressbook.remove_address(line)
-
+    def do_sent_purge(self, line):
+        self.lastcmd = ""
+        sent_ = db.sent.find("sent", "all")
+        for x in sent_:
+            sent.sent_delete(x['id'])
+        print "Sent database purged."
 if __name__ == "__main__":
     exists = db.data.find("data", "all")
     if not exists:
