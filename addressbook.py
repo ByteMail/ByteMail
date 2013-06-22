@@ -11,9 +11,21 @@ def check_entry(entryname):
 
 def add_entry(entryname,address):
     if entryname == "" or address == "":
-        pass
+        return
     else:
-        db.addressdb.insert("addresses",{entryname:address})
+        check = db.addressdb.find("addresses", "all")
+        done = False
+        for x in check:
+            for y in x:
+                if y == entryname:
+                    db.addressdb.remove("addresses", x)
+                    db.addressdb.insert("addresses", {entryname:address})
+                    done = True
+                    break
+            if done:
+                break
+        if not done:
+            db.addressdb.insert("addresses",{entryname:address})
 
 def addresses():
     addresses = db.addressdb.find("addresses", "all")
@@ -26,3 +38,12 @@ def addresses():
         a = "{0} {1}\n".format(name, addr)
         addresses_ = addresses_ + a
     return addresses_
+
+def remove_address(entryname):
+    
+    check = db.addressdb.find("addresses", "all")
+    for x in check:
+        for y in x:
+            if y == entryname:
+                db.addressdb.remove("addresses", x)
+    return "Address Deleted"

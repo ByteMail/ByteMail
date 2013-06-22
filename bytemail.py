@@ -21,7 +21,7 @@ import rsa
 import addressbook
 import sent
 
-__version__ = "0.3.2"
+__version__ = "0.3.21"
 
 class ByteMail:
     
@@ -240,6 +240,12 @@ class Prompt(cmd.Cmd):
     def do_sent_delete(self, line):
         self.lastcmd = ""
         print sent.sent_delete(line)
+    def help_remove_address(self):
+        self.lastcmd = ""
+        print "Delete an address from your addressbook. Usage: remove_address <entryname>"
+    def do_remove_address(self, line):
+        self.lastcmd = ""
+        print addressbook.remove_address(line)
 
 if __name__ == "__main__":
     exists = db.data.find("data", "all")

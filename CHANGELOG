@@ -1,3 +1,9 @@
+Version 0.3.21 Beta
+
+- Fixed multiple entries into the addressbook.db
+- Added updating to addressbook (simple insert a new address with the same name to update it)
+- Added remove_address command in order to delete from the addressbook
+
 Version 0.3.2 Beta
 
 - Added Timestamp to messages
