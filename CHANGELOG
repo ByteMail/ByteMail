@@ -1,3 +1,9 @@
+Version 0.3.2 Beta
+
+- Added Timestamp to messages
+- Added sent command for checking sent messages
+- Added sent_delete command for deleting messages in the sent.db file
+
 Version 0.3.1 Beta
 
 - Fixed RSA signature bug

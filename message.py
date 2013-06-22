@@ -6,6 +6,8 @@ from rsa import *
 import base64
 import antispam
 import aes
+import time
+
 def message(obj, ip, data):
     addr = db.data.find("data", "all")[0]['addr']
     msg = data['message']
@@ -17,6 +19,11 @@ def message(obj, ip, data):
     as_num = data['num']
     key = data['key']
     signature = data['signature']
+    if "time" in data:
+        time_ = data['time']
+    else:
+        time_ = "Unknown"
+
     try:
         data = db.nodes.find("nodes", {"addr":from_})[0]
     except:
@@ -29,8 +36,18 @@ def message(obj, ip, data):
             return
     if antispam.check_antispam(to,from_,msg,as_num,as_nonce,antispam.get_required_difficulty(msg)):
 	    if len(from_) == 32 and len(to) == 32:
-        	db.messages.insert("messages", {"id":id, "message":msg, "from":from_, "title":title, "to":to,"as_num":as_num,"as_nonce":as_nonce,"key":key,"signature":signature})
-	        if to == addr:
+                message = {"id":id, 
+                    "time":time_, 
+                    "message":msg, 
+                    "from":from_, 
+                    "title":title,
+                    "to":to,
+                    "as_num":as_num,
+                    "as_nonce":as_nonce,
+                    "key":key,
+                    "signature":signature}
+	        db.messages.insert("messages", message)
+            if to == addr:
        		    print "\nYou have a new message from", from_
 def send_msg(msg, title, to, addr):
     # Copied and pasted from read.py
@@ -62,14 +79,17 @@ def send_msg(msg, title, to, addr):
             break
     print "Sending message ID " + id + " with key " + key + " and signature " + signature
     nodes = db.nodes.find("nodes", "all")
+    t = time.localtime()
+    time_ = "{0}/{1}/{2} {3}:{4}:{5}".format(t[1], t[2], t[0], t[3], t[4], t[5])
     for x in nodes:
         s = ssl.socket()
         try:
             s.settimeout(1)
             s.connect((x['ip'], x['port']))
-            s.send(json.dumps({"cmd":"message", "id":id, "message":msg, "title":title, "to":to, "from":addr,"num":as_num,"nonce":as_nonce,"key":key,"signature":signature}))
+            s.send(json.dumps({"cmd":"message", "time":time_ ,"id":id, "message":msg, "title":title, "to":to, "from":addr,"num":as_num,"nonce":as_nonce,"key":key,"signature":signature}))
             s.close()
         except Exception, error:
-            db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"message", "id":id, "message":msg, "title":title, "to":to, "from":addr,"num":as_num,"nonce":as_nonce,"key":key,"signature":signature}})
+            db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"message", "time":time_, "id":id, "message":msg, "title":title, "to":to, "from":addr,"num":as_num,"nonce":as_nonce,"key":key,"signature":signature}})
+    db.sent.insert("sent", {"id":id, "title":title, "to":to})
     return "Message Sent!"
 

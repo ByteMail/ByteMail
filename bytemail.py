@@ -19,8 +19,9 @@ import time
 import random
 import rsa
 import addressbook
+import sent
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 class ByteMail:
     
@@ -230,6 +231,15 @@ class Prompt(cmd.Cmd):
     def help_exit(self):
         self.lastcmd = ""
         print "Closes ByteMail."
+    def help_sent(self):
+        self.lastcmd = ""
+        print "Shows all sent messages."
+    def do_sent(self, line):
+        self.lastcmd = ""
+        print sent.sent()
+    def do_sent_delete(self, line):
+        self.lastcmd = ""
+        print sent.sent_delete(line)
 
 if __name__ == "__main__":
     exists = db.data.find("data", "all")

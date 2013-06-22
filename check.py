@@ -9,9 +9,10 @@ def check(addr):
                 message = """
             
             ID: {2}
+            Time: {3}
             From: {0}
             Title: {1}
 
-                """.format(x['from'], x['title'], x['id'])
+                """.format(x['from'], x['title'], x['id'], x['time'])
                 messages.append(message)
     return messages

@@ -17,13 +17,14 @@ def read(id, addr):
                 msg = """
 
                 ID: {0}
+                Time: {4}
                 From: {1}
                 Title: {2}
 
 {3}
 
 
-                """.format(x['id'], x['from'], x['title'], aes.decryptData(aeskey, base64.b64decode(x['message'])))
+                """.format(x['id'], x['from'], x['title'], aes.decryptData(aeskey, base64.b64decode(x['message'])), x['time'])
                 return msg
 
         except KeyError:

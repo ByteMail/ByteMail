@@ -1,5 +1,6 @@
 import landerdb
 
+sent = landerdb.Connect("sent.db")
 nodes = landerdb.Connect("nodes.db")
 data = landerdb.Connect("data.db")
 unsent = landerdb.Connect("unsent.db")
