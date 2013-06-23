@@ -21,7 +21,7 @@ import rsa
 import addressbook
 import sent
 
-__version__ = "0.3.23"
+__version__ = "0.3.24"
 
 class ByteMail:
     
@@ -182,7 +182,7 @@ class Prompt(cmd.Cmd):
         self.lastcmd = ""
     def do_read(self, id):
         addr = db.data.find("data", "all")[0]['addr']
-        print read.read(id, addr)
+        print read.read(id, addr).decode("utf-8")
         self.lastcmd = ""
     def help_read(self):
         print "Usage: read <id>"

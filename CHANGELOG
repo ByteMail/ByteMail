@@ -1,3 +1,7 @@
+Version 0.3.24 Beta
+
+- Added emoticons! Current ones are: :flag: :smile: :radioactive: :pirate:
+
 Version 0.3.23 Beta
 
 - When a new message is received instead of displaying the address it will display the name you assigned to that address, assuming the address is in your addressbook (only applies to relay nodes)

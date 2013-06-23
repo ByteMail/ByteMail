@@ -2,7 +2,7 @@ import db
 from rsa import *
 import base64
 import aes
-
+import emoticons
 def read(id, addr):
     data = db.messages.find("messages", {"to":addr})
     my_key = db.data.find("data", "all")[0]["privatekey"]
@@ -24,7 +24,7 @@ def read(id, addr):
 {3}
 
 
-                """.format(x['id'], x['from'], x['title'], aes.decryptData(aeskey, base64.b64decode(x['message'])), x['time'])
+                """.format(x['id'], x['from'], x['title'], emoticons.apply_emoticons(aes.decryptData(aeskey, base64.b64decode(x['message']))).encode("utf-8"), x['time'])
                 return msg
 
         except KeyError:
