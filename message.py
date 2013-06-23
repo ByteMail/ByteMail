@@ -98,6 +98,6 @@ def send_msg(msg, title, to, addr):
             s.close()
         except Exception, error:
             db.unsent.insert("unsent", {"to":[x['ip'], x['port']], "message":{"cmd":"message", "time":time_, "id":id, "message":msg, "title":title, "to":to, "from":addr,"num":as_num,"nonce":as_nonce,"key":key,"signature":signature}})
-    db.sent.insert("sent", {"id":id, "title":title, "to":to})
+    db.sent.insert("sent", {"id":id, "title":title, "to":to, "time":time_})
     return "Message Sent!"
 
