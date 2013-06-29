@@ -6,7 +6,10 @@ import read
 import delete
 
 app = Flask(__name__)
-addr = db.data.find("data", "all")[0]['addr']
+try:
+    addr = db.data.find("data", "all")[0]['addr']
+except TypeError:
+    addr = "Unknown"
 
 def check():
     c = db.messages.find("messages", "all")
