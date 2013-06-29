@@ -1,8 +1,12 @@
 {% extends "include.html" %}
 {% block body %}
-<title>ByteMail</title>
-ID: {{ id }} <br/>
-From: {{ from_ }}<br/>
-Title: {{ title }}<br/>
-<p>{{ message }}</p>
-{% endblock %}
+    <div class="inbox">
+    <table id='messages'>
+        <tr><td>ID: <strong>{{ id }}</strong></td></tr>
+        <tr><td>From: <strong>{{ from_ }}</strong></td></tr>
+        <tr><td>Time: <strong>{{ time }}</strong></td></tr>
+        <tr><td>{{ message }}</td></tr>
+    </table>    
+</div>
+    
+{% endblock%}

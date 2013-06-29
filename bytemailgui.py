@@ -6,10 +6,6 @@ import read
 import delete
 
 app = Flask(__name__)
-try:
-    addr = db.data.find("data", "all")[0]['addr']
-except TypeError:
-    addr = "Unknown"
 
 def check():
     c = db.messages.find("messages", "all")
@@ -45,7 +41,7 @@ def read_(id):
     from_ = data[6]
     message = ' '.join(data[9:])
     num = check()
-    return render_template("read.html", num=str(len(num)), id=id, time=time, from_=from_, message=message, title=title)
+    return render_template("read.html", num=str(len(num)), id=id, time=time, from_=from_, message=message, title=title, addr=addr)
 
 @app.route("/send/", methods=['GET', 'POST'])
 def send():
@@ -71,6 +67,8 @@ def delete_(id):
     return redirect("/")
 
 def run():
+    global addr
+    addr = db.data.find("data", "all")[0]['addr']
     app.run(port=5334)
 
 
