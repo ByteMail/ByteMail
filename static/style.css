@@ -4,6 +4,8 @@ html {
     padding:0;
     color: #4D4D4D;
     background: #E5E5E5 ;
+    font-family: sans-serif;
+
 }
 
 .top-bar {
@@ -21,7 +23,7 @@ html {
     
     font-size: 55px;
     position: absolute;
-    top: -35%;
+    top: -25%;
     left: 10%;
 
 }
