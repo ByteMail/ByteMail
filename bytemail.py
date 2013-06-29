@@ -20,8 +20,11 @@ import random
 import rsa
 import addressbook
 import sent
+import bytemailgui
+import webbrowser
 
-__version__ = "0.3.25"
+__version__ = "0.4.0"
+GUI = True
 
 class ByteMail:
     
@@ -40,9 +43,9 @@ class ByteMail:
         self.host = "0.0.0.0"
         self.open_port = False
         self.config = {
-                "relay":False
+                "relay":True
                 }
-    def main(self): 
+    def main(self):
         if not db.nodes.find("nodes", "all"):
             check = self.config['relay']
             if check:
@@ -113,8 +116,10 @@ class ByteMail:
             except ValueError:
                 obj.close()
             else:
-                self.cmds[data['cmd']](obj, ip, data)
-
+                try:
+                    self.cmds[data['cmd']](obj, ip, data)
+                except KeyError:
+                    pass
     def send_checkin(self):
         nodes = db.nodes.find("nodes", "all")
         for x in nodes:
@@ -272,8 +277,12 @@ if __name__ == "__main__":
     c = Prompt()
     thread.start_new_thread(b.main, ())
     thread.start_new_thread(unsent.unsent, ())
-    while True:
-        try:
-            c.cmdloop()
-        except KeyboardInterrupt:
-            continue
+    if not GUI:
+        while True:
+            try:
+                c.cmdloop()
+            except KeyboardInterrupt:
+                continue
+    else:
+        webbrowser.open("http://localhost:5334")
+        bytemailgui.run()

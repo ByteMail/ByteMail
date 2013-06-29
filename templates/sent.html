@@ -1,0 +1,10 @@
+{% extends "include.html" %}
+{% block body %}
+    <div class="inbox">
+    {% for x in  messages  %}
+    <table id='messages'>
+        <tr><td><strong>{{ x['time'] }}</strong></td><td>{{ x['to'] }}</td><td>{{ x['title'] }}</td></tr>
+    </table>    
+    {% endfor %}
+</div>
+{% endblock%}

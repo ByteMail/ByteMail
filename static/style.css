@@ -1,0 +1,134 @@
+html {
+
+    margin:0;
+    padding:0;
+    color: #4D4D4D;
+    background: #E5E5E5 ;
+}
+
+.top-bar {
+    
+    height:15%;
+    background: #F7F7F7;
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+
+}
+
+.top-bar h1 {
+    
+    font-size: 55px;
+    position: absolute;
+    top: -35%;
+    left: 10%;
+
+}
+
+.top-bar strong {
+
+    color: #00B3B2;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+
+}
+
+.side-bar {
+
+    position: absolute;
+    left: 0;
+    top:15%;
+    background-color:gray;
+    width: 15%;
+    height: 100%;
+
+}
+
+.side-bar a {
+    
+    text-decoration: none;
+    color: #EE6363;
+    font-weight: bold;
+    font-size: 27px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.size-bar a:visited {
+
+    color:#EE6363;
+
+}
+
+.size-bar a:hover {
+
+    text-decoration: underline;
+
+}
+
+.inbox {
+
+    position: absolute;
+    top: 15%;
+    left:155%;
+    background-color: #C9C9C9;
+    padding: 15px;
+    width: 425%;
+    border-radius: 5px; solid; #C9C9C9;   
+}
+
+.inbox a {
+    
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+
+}
+
+.inbox a:hover {
+
+    text-decoration: underline;
+
+}
+
+.inbox table {
+
+    margin: 1px;
+}
+
+.inbox td {
+
+    padding: 10px;
+
+}
+
+.form-style {
+
+    position: absolute;
+    top:0%;
+    left: 255%;
+
+}
+
+.form-style input {
+
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px; solid;
+}
+
+.form-style textarea {
+    
+    border-radius: 5px; solid;
+    
+}
+
+.form-style-submit {
+
+    color: white;
+    background-color: #00688B;
+    font-weight: bold;
+    width: 95%;
+}
