@@ -259,7 +259,9 @@ class Prompt(cmd.Cmd):
         print "Sent database purged."
 if __name__ == "__main__":
     exists = db.data.find("data", "all")
+    new = False
     if not exists:
+        new = True
         print "First time running ByteMail"
         print "Generating new keys... This could take a while."
         publickey, privatekey = rsa.newkeys(1024)
@@ -284,5 +286,7 @@ if __name__ == "__main__":
             except KeyboardInterrupt:
                 continue
     else:
+        if new:
+            time.sleep(60)
         webbrowser.open("http://localhost:5334")
         bytemailgui.run()
