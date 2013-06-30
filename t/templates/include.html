@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <div class="top-bar">
+            <h1>ByteMail</h1>
+            <strong>My Address: {{ addr }}</strong>
+        </div>
+        <title>ByteMail({{ num }})</title>
+        <link rel='stylesheet' type='text/css' href='../static/style.css'/>
+        <div class='side-bar'>
+            <br/><a href='/'>Inbox({{ num }})</a><br/><br/>
+            <a href="/send/">Send</a><br/><br/>
+            <a href="/sent/">Sent</a>
+    </head>
+    {% block body %}
+
+    {% endblock%}
+</html>

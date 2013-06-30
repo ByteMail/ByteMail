@@ -1,0 +1,13 @@
+{% extends "include.html" %}
+{% block body %}
+    <div class="inbox">
+    {% for x in  messages  %}
+    <table id='messages'>
+        <tr><td><strong>{{ x['time'] }}</strong></td><td>{{ x['from'] }}</td><td>{{ x['title'] }}</td><td><a href="/read/{{ x['id'] }}">Read</a></td><td><a href="/delete/{{ x['id'] }}">Delete</a></td></tr>
+    </table>    
+    {% endfor %}
+</div>
+    <script>
+        setTimeout(function(){window.location = "/";}, 10000);
+    </script>
+{% endblock%}
