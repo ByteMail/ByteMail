@@ -8,7 +8,10 @@ import delete
 app = Flask(__name__)
 
 def check():
-    c = db.messages.find("messages", "all")
+    try:
+        c = db.messages.find("messages", "all")
+    except:
+        check()
     messages = []
     for x in c:
         if 'to' in x:
@@ -73,7 +76,7 @@ def delete_(id):
 def run():
     global addr
     addr = db.data.find("data", "all")[0]['addr']
-    app.run(port=5334)
+    app.run(port=5334, debug=True)
 
 
 if __name__ == "__main__":

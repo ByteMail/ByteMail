@@ -1,3 +1,7 @@
+Version 0.4.11
+
+- Fixed JSON Error in bytemailgui.py
+
 Version 0.4.1
 
 - Fixed new client bug
