@@ -3,7 +3,7 @@
     <div class="inbox">
     {% for x in  messages  %}
     <table id='messages'>
-        <tr><td><strong>{{ x['time'] }}</strong></td><td>{{ x['to'] }}</td><td>{{ x['title'] }}</td></tr>
+        <tr><td><strong>{{ x['time'] }}</strong></td><td>{{ x['to'] }}</td><td>{{ x['title'] }}</td><td><a href='/sent/delete/{{ x['id'] }}/'>Delete</a></tr>
     </table>    
     {% endfor %}
 </div>

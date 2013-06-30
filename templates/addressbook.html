@@ -1,0 +1,16 @@
+{% extends "include.html" %}
+{% block body %}
+<div class="inbox">
+    <form method='post'>
+        <input type='text' name='name' placeholder='Name'/>
+        <input type='text' name='addr' placeholder='Address'/>
+        <input type='submit'  name='submit' value='Add'/>
+    </form>
+    <br/>    
+    {% for x in  addresses  %}
+    <table id='messages'>
+        <tr><td><strong>{{ x['name'] }}</strong></td><td>{{ x['addr'] }}</td><td><a href='/addressbook/delete/{{ x['name']}}/'>Delete</a></tr>
+    </table>    
+    {% endfor %}
+</div>
+{% endblock%}

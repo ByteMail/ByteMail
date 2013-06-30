@@ -4,6 +4,8 @@ import message
 import random
 import read
 import delete
+import addressbook
+import sent as sent_
 
 app = Flask(__name__)
 
@@ -27,7 +29,12 @@ def index():
     message = check()
     message.reverse()
     return render_template("index.html", messages=message, num=str(len(message)), addr=addr)
-    
+
+@app.route("/sent/delete/<id>/")
+def empty_sent(id):
+    sent_.sent_delete(id)
+    return redirect("/sent/")
+
 @app.route("/sent/")
 def sent():
     try:
@@ -49,6 +56,28 @@ def read_(id):
     message = ' '.join(data[7:])
     num = check()
     return render_template("read.html", num=str(len(num)), id=id, time=time, from_=from_, message=message, title=title, addr=addr)
+@app.route("/addressbook/", methods=['GET', 'POST'])
+def addressbook_():
+    if request.method == "POST":
+        name = request.form['name']
+        address = request.form['addr']
+        addressbook.add_entry(name, address)
+        return redirect("/addressbook/")
+    addr_ = []
+    addresses = addressbook.addresses().replace("\t", '').split("\n")
+    for x in addresses:
+        if x != '':
+            x = x.split()
+            name = x[0]
+            addre = x[1]
+            addr_.append({"name":name, "addr":addre})
+    addresses = addr_
+    return render_template("addressbook.html", addresses=addresses, num=str(len(check())), addr=addr)
+
+@app.route("/addressbook/delete/<name>/")
+def address_delete(name):
+    addressbook.remove_address(name)
+    return redirect("/addressbook/")
 
 @app.route("/send/", methods=['GET', 'POST'])
 def send():
@@ -77,7 +106,7 @@ def delete_(id):
 def run():
     global addr
     addr = db.data.find("data", "all")[0]['addr']
-    app.run(port=5334)
+    app.run(port=5334, debug=True)
 
 
 if __name__ == "__main__":

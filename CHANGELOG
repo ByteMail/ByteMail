@@ -1,3 +1,8 @@
+Version 0.4.2
+
+- Added addressbook to WebUI
+- Can no delete sent messages from webUI
+
 Version 0.4.12
 
 - Fixed /read/ layout error
