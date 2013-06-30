@@ -260,7 +260,6 @@ class Prompt(cmd.Cmd):
 if __name__ == "__main__":
     exists = db.data.find("data", "all")
     if not exists:
-        new = True
         print "First time running ByteMail"
         print "Generating new keys... This could take a while."
         publickey, privatekey = rsa.newkeys(1024)

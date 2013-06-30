@@ -2,9 +2,10 @@
 {% block body %}
     <div class="inbox">
     <table id='messages'>
-        <tr><td>ID: <strong>{{ id }}</strong></td></tr>
-        <tr><td>From: <strong>{{ from_ }}</strong></td></tr>
-        <tr><td>Time: <strong>{{ time }}</strong></td></tr>
+        <tr><td><strong>{{ id }}</strong></td></tr>
+        <tr><td><strong>{{ from_ }}</strong></td></tr>
+        <tr><td><strong>{{ time }}</strong></td></tr>
+        <tr><td><strong> {{ title }}</strong></td></tr>
         <tr><td>{{ message }}</td></tr>
     </table>    
 </div>

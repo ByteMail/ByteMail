@@ -41,13 +41,13 @@ def sent():
         return "<script>alert('You have not sent any messages yet.');window.location = '/';</script>" 
 @app.route("/read/<id>")
 def read_(id):
-    data = read.read(id, addr).split()
-    id = data[1]
-    date = data[3]
-    time = data[4]
-    title = data[8]
-    from_ = data[6]
-    message = ' '.join(data[9:])
+    data = read.read(id, addr).split("\n")
+    print data
+    id = data[2]
+    time = data[3]
+    title = data[4]
+    from_ = data[5]
+    message = ' '.join(data[7:])
     num = check()
     return render_template("read.html", num=str(len(num)), id=id, time=time, from_=from_, message=message, title=title, addr=addr)
 
