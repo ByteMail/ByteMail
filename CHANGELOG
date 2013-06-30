@@ -1,3 +1,6 @@
+Version 0.4.12
+
+- Added new emoticons - :frown:, :disapproval:, and :wink:
 Version 0.4.11
 
 - Fixed JSON Error in bytemailgui.py
