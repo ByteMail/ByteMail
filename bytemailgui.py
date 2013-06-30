@@ -42,7 +42,6 @@ def sent():
 @app.route("/read/<id>")
 def read_(id):
     data = read.read(id, addr).split("\n")
-    print data
     id = data[2]
     time = data[3]
     title = data[4]
