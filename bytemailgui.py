@@ -19,12 +19,10 @@ def check():
 
 @app.route("/")
 def index():
-    try:
-        message = check()
-        message.reverse()
-        return render_template("index.html", messages=message, num=str(len(message)), addr=addr)
-    except:
-        return "You seem to be a new node, ByteMail needs some time to setup, reload the page in 5 minutes or so."
+    message = check()
+    message.reverse()
+    return render_template("index.html", messages=message, num=str(len(message)), addr=addr)
+    
 @app.route("/sent/")
 def sent():
     try:
