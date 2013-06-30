@@ -1,11 +1,3 @@
-Version 0.4.12
-
-<<<<<<< HEAD
-- Fixed /read/ layout error
-
-=======
-- Added new emoticons - :frown:, :disapproval:, and :wink:
->>>>>>> 2c35ddbe150afe3a838a6ba719f572750918c908
 Version 0.4.11
 
 - Fixed JSON Error in bytemailgui.py
