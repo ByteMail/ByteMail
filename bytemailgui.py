@@ -55,7 +55,9 @@ def read_(id):
     from_ = data[5]
     message = ' '.join(data[7:])
     num = check()
-    return render_template("read.html", num=str(len(num)), id=id, time=time, from_=from_, message=message, title=title, addr=addr)
+    to_ = title.split()[1]
+    title_ = from_.split()[1]
+    return render_template("read.html", title_=title_, to_=to_, num=str(len(num)), id=id, time=time, from_=from_, message=message, title=title, addr=addr)
 @app.route("/addressbook/", methods=['GET', 'POST'])
 def addressbook_():
     if request.method == "POST":
@@ -73,6 +75,25 @@ def addressbook_():
             addr_.append({"name":name, "addr":addre})
     addresses = addr_
     return render_template("addressbook.html", addresses=addresses, num=str(len(check())), addr=addr)
+
+@app.route("/reply/<to>/<title>/", methods=['GET', 'POST'])
+def reply(to, title):
+    num = check()
+    if request.method == 'POST':
+        to = request.form['to']
+        if len(to) != 32:
+            check_ = db.addressdb.find("addresses", "all")
+            for x in check_:
+                for y in x:
+                    if y == to:
+                        to = x[y]
+        title = request.form['title']
+        msg = request.form['message']
+        check_ = message.send_msg(msg, title, to, addr)
+        check_ = """<script>alert("{0}");window.location = '/';</script>""".format(check_)
+        return check_
+    
+    return render_template("reply.html", title=title, to=to, addr=addr, num=str(len(num)))
 
 @app.route("/addressbook/delete/<name>/")
 def address_delete(name):
@@ -106,7 +127,7 @@ def delete_(id):
 def run():
     global addr
     addr = db.data.find("data", "all")[0]['addr']
-    app.run(port=5334, debug=True)
+    app.run(port=5334)
 
 
 if __name__ == "__main__":
