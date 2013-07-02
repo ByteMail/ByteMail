@@ -65,17 +65,19 @@ def addressbook_():
         address = request.form['addr']
         addressbook.add_entry(name, address)
         return redirect("/addressbook/")
-    addr_ = []
-    addresses = addressbook.addresses().replace("\t", '').split("\n")
-    for x in addresses:
-        if x != '':
-            x = x.split()
-            name = x[0]
-            addre = x[1]
-            addr_.append({"name":name, "addr":addre})
-    addresses = addr_
-    return render_template("addressbook.html", addresses=addresses, num=str(len(check())), addr=addr)
-
+    try:
+        addr_ = []
+        addresses = addressbook.addresses().replace("\t", '').split("\n")
+        for x in addresses:
+            if x != '':
+                x = x.split()
+                name = x[0]
+                addre = x[1]
+                addr_.append({"name":name, "addr":addre})
+        addresses = addr_
+        return render_template("addressbook.html", addresses=addresses, num=str(len(check())), addr=addr)
+    except:
+        return render_template("addressbook.html", num=str(len(check())), addr=addr)
 @app.route("/reply/<to>/<title>/", methods=['GET', 'POST'])
 def reply(to, title):
     num = check()
