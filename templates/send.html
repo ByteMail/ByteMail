@@ -1,11 +1,16 @@
 {% include "include.html" %}
 {% block body %}
 <title>ByteMail</title>
-<form method = "post" class='form-style'>
-    <h1>Send</h1>
-    <input type='text' name='to' placeholder="To" style="width:95%"/><br/>
-    <input type='text' name='title' placeholder='Title' style="width:95%"/><br/>
-    <textarea cols=75 rows=20 name='message' placeholder='Message...' ></textarea><br/>
-    <input type='submit' value='Submit' class='form-style-submit'/>
-</form>
+		
+<!-- Send Message -->
+
+        <div id="send-container">
+				<form id="send-form" method='POST'>
+					To: <input id="to" type="text" name="to"/> <br/> <br/>
+					Title: <input id="title" type="text" name="title"/> <br/> <br/>
+					Body: <textarea type="textarea" id="text" rows="10" value="Body" name='message'></textarea>
+		
+					<div id="send-button-container"><button type='submit' class="delete-button">Send</button></div>
+				</form>
+			</div>
 {% endblock %}

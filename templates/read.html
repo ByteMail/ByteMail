@@ -1,14 +1,12 @@
 {% extends "include.html" %}
 {% block body %}
-    <div class="inbox">
-    <table id='messages'>
-        <tr><td><strong>{{ id }}</strong></td></tr>
-        <tr><td><strong>{{ from_ }}</strong></td></tr>
-        <tr><td><strong>{{ time }}</strong></td></tr>
-        <tr><td><strong> {{ title }}</strong></td></tr>
-        <tr><td>{{ message }}</td></tr>
-        <a href='/reply/{{ to_ }}/{{ title_ }}/'>Reply</a> 
-    </table>    
+<title>ByteMail</title>
+<div id='email-container'>
+<div id='delete-container' style='position: absolute; right: 1%;'>
+        <a href='/reply/{{ to_ }}/{{ title_ }}' class='delete-button'>Reply</a>
+    </div>
+<p>From: <span id="from">{{ from_ }}</span></p>
+<p>Title: {{ title }}<p>
+<p>Body: <br/><br/>{{ message }}<p/>
 </div>
-    
-{% endblock%}
+{% endblock %}

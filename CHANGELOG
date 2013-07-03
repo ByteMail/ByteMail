@@ -1,3 +1,9 @@
+Version 0.4.5
+
+- Updated Style
+- Bug Fixes
+- The nodes.db was getting cluttered so I decided to delete it and start over (this was due to a lot of testing) that network still exists but it will no longer add new nodes. If you want to join the new network you need to delete all your .db files (except for your addresses.db) and restart ByteMail
+
 Version 0.4.3
 
 - Added reply button to /read/

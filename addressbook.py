@@ -14,6 +14,9 @@ def add_entry(entryname,address):
         return
     else:
         check = db.addressdb.find("addresses", "all")
+        if not check:
+            db.addressdb.insert("addresses", {"":""})
+            check = db.addressdb.find("addresses", "all")
         done = False
         for x in check:
             for y in x:
@@ -29,6 +32,9 @@ def add_entry(entryname,address):
 
 def addresses():
     addresses = db.addressdb.find("addresses", "all")
+    if not addresses:
+        db.addressdb.insert("addresses", {"":""})
+        addresses = db.addressdb.find("addresses", "all")
     addresses_ = "\n"
     for x in addresses:
         name, addr = "", ""

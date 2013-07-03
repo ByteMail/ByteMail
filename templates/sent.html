@@ -1,10 +1,19 @@
 {% extends "include.html" %}
 {% block body %}
-    <div class="inbox">
-    {% for x in  messages  %}
-    <table id='messages'>
-        <tr><td><strong>{{ x['time'] }}</strong></td><td>{{ x['to'] }}</td><td>{{ x['title'] }}</td><td><a href='/sent/delete/{{ x['id'] }}/'>Delete</a></tr>
-    </table>    
-    {% endfor %}
-</div>
+<title>ByteMail ({{ num }})</title>
+	<div id="message-container">
+		<form name="delete-messages" method='POST'>
+			{% for x in  messages  %}
+				<div class="messages">
+                    <span class="checkbox"> <input type="checkbox" name="delete" value={{ x['id'] }}/> </span>
+					
+						<span class="sender">{{ x['to'] }}</class>
+						<span class="subject">{{ x['title'] }}</span>
+						<span class="time">{{ x['time'] }}</span> 
+					
+				</div>
+                {% endfor %}<br/>
+			<button class="delete-button">Delete</button>
+		</form>
+	</div>
 {% endblock%}

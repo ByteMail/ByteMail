@@ -1,16 +1,22 @@
 {% extends "include.html" %}
 {% block body %}
-<div class="inbox">
-    <form method='post'>
-        <input type='text' name='name' placeholder='Name'/>
-        <input type='text' name='addr' placeholder='Address'/>
-        <input type='submit'  name='submit' value='Add'/>
-    </form>
-    <br/>    
-    {% for x in  addresses  %}
-    <table id='messages'>
-        <tr><td><strong>{{ x['name'] }}</strong></td><td>{{ x['addr'] }}</td><td><a href='/addressbook/delete/{{ x['name']}}/'>Delete</a></tr>
-    </table>    
-    {% endfor %}
-</div>
+<title>ByteMail ({{ num }})</title>
+<div id="message-container">
+        <form method='post'> <input type='text' name='name' placeholder='Name'/> <input type='text' name='addr' placeholder='Address'><input type='submit' value='Add' class='delete-button'/>
+        <form name="delete-messages" method='POST'>
+            <div class="messages">
+                <br/>
+                {% for x in  addresses  %}
+						<span class="checkbox"> <input type="checkbox" name='delete' value="{{ x['name'] }}"/> </span>
+					
+                        <span class='title'> {{ x['name'] }}</span>
+                        <span class="sender">{{ x['addr'] }}</span><br/>
+						{% endfor %}
+						
+					
+				</div>
+                <br/>		<button name='delete-btn' class="delete-button">Delete</button>
+		</form>
+	</div>
+
 {% endblock%}

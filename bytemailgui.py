@@ -24,20 +24,24 @@ def check():
     return messages
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        for x in request.form.getlist("delete"):
+            delete_(x.replace("/", ''))
     message = check()
     message.reverse()
     return render_template("index.html", messages=message, num=str(len(message)), addr=addr)
 
-@app.route("/sent/delete/<id>/")
 def empty_sent(id):
     sent_.sent_delete(id)
-    return redirect("/sent/")
 
-@app.route("/sent/")
+@app.route("/sent/", methods=['GET', 'POST'])
 def sent():
     try:
+        if request.method == 'POST':
+            for x in request.form.getlist("delete"):
+                empty_sent(x.replace("/", ''))
         c = db.sent.find("sent", "all")
         message = []
         for x in c:
@@ -58,25 +62,33 @@ def read_(id):
     to_ = title.split()[1]
     title_ = from_.split()[1]
     return render_template("read.html", title_=title_, to_=to_, num=str(len(num)), id=id, time=time, from_=from_, message=message, title=title, addr=addr)
+
 @app.route("/addressbook/", methods=['GET', 'POST'])
 def addressbook_():
     if request.method == "POST":
         name = request.form['name']
         address = request.form['addr']
         addressbook.add_entry(name, address)
+        delete = request.form.getlist("delete")
+        if delete:
+            for x in delete:
+                address_delete(x)
         return redirect("/addressbook/")
     try:
         addr_ = []
         addresses = addressbook.addresses().replace("\t", '').split("\n")
         for x in addresses:
-            if x != '':
-                x = x.split()
-                name = x[0]
-                addre = x[1]
-                addr_.append({"name":name, "addr":addre})
+            try:
+                if x != '':
+                    x = x.split()
+                    name = x[0]
+                    addre = x[1]
+                    addr_.append({"name":name, "addr":addre})
+            except IndexError:
+                continue
         addresses = addr_
         return render_template("addressbook.html", addresses=addresses, num=str(len(check())), addr=addr)
-    except:
+    except Exception, error:
         return render_template("addressbook.html", num=str(len(check())), addr=addr)
 @app.route("/reply/<to>/<title>/", methods=['GET', 'POST'])
 def reply(to, title):
@@ -97,10 +109,8 @@ def reply(to, title):
     
     return render_template("reply.html", title=title, to=to, addr=addr, num=str(len(num)))
 
-@app.route("/addressbook/delete/<name>/")
 def address_delete(name):
     addressbook.remove_address(name)
-    return redirect("/addressbook/")
 
 @app.route("/send/", methods=['GET', 'POST'])
 def send():
@@ -121,15 +131,13 @@ def send():
     
     return render_template("send.html", addr=addr, num=str(len(num)))
     
-@app.route("/delete/<id>")
 def delete_(id):
     check = delete.send_delete(id, addr)
-    return redirect("/")
 
 def run():
     global addr
     addr = db.data.find("data", "all")[0]['addr']
-    app.run(port=5334)
+    app.run(port=5334, debug=True)
 
 
 if __name__ == "__main__":

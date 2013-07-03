@@ -1,16 +1,28 @@
 <html>
     <head>
-        <div class="top-bar">
-            <h1>ByteMail</h1>
-            <strong>My Address: {{ addr }}</strong>
+		<link rel='stylesheet' type='text/css' href='../static/style.css'/>
+		
+        <!-- Top Head -->
+			<div id="top-bar">
+				<!-- Logo -->
+					<div id="logo">
+						Byte Mail
+					</div id="logo">
+				<!-- Address -->
+					<div id="address">
+						{{ addr }}
+					</div>
+				<!-- Link Bar -->
+			</div>
+		
+		<!-- Side Bar -->
+        <div class='links'>
+            <a href='/'>Inbox({{ num }})</a> <br/>
+            <a href='/send/'>Send</a> <br/>
+	    <a href="/sent/"> Sent </a> <br/>
+	    <a href="/addressbook/">Contacts</a><br/>
         </div>
-        <title>ByteMail({{ num }})</title>
-        <link rel='stylesheet' type='text/css' href='../static/style.css'/>
-        <div class='side-bar'>
-            <br/><a href='/'>Inbox({{ num }})</a><br/><br/>
-            <a href="/send/">Send</a><br/><br/>
-            <a href="/sent/">Sent</a><br/><br/>
-            <a href="/addressbook/">Contact</a>
+
     </head>
     {% block body %}
 
