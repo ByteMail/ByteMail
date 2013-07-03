@@ -137,7 +137,7 @@ def delete_(id):
 def run():
     global addr
     addr = db.data.find("data", "all")[0]['addr']
-    app.run(port=5334, debug=True)
+    app.run(port=5334, debug=False)
 
 
 if __name__ == "__main__":
