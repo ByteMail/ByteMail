@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import socket                                                                                                                         
 import db
 import checkin
