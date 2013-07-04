@@ -1,3 +1,8 @@
+Version 0.4.6
+
+- Can no send a message to multiple people in the GUI seperating the addresses with a comma in the "To:" form. ex: Me, tom, ben
+- Fixed replying bug.`
+
 Version 0.4.5
 
 - Updated Style

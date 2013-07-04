@@ -116,17 +116,23 @@ def address_delete(name):
 def send():
     num = check()
     if request.method == 'POST':
-        to = request.form['to']
-        if len(to) != 32:
-            check_ = db.addressdb.find("addresses", "all")
-            for x in check_:
-                for y in x:
-                    if y == to:
-                        to = x[y]
-        title = request.form['title']
-        msg = request.form['message']
-        check_ = message.send_msg(msg, title, to, addr)
-        check_ = """<script>alert("{0}");window.location = '/';</script>""".format(check_)
+        to = request.form['to'].replace(" ", '')
+        if "," in to:
+            t = to.split(",")
+        else:
+            t = []
+            t.append(to)
+        for to in t:
+            if len(to) != 32:
+                check_ = db.addressdb.find("addresses", "all")
+                for x in check_:
+                    for y in x:
+                        if y == to:
+                            to = x[y]
+            title = request.form['title']
+            msg = request.form['message']
+            check_ = message.send_msg(msg, title, to, addr)
+            check_ = """<script>alert("{0}");window.location = '/';</script>""".format(check_)
         return check_
     
     return render_template("send.html", addr=addr, num=str(len(num)))
