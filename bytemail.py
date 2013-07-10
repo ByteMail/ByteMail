@@ -24,7 +24,7 @@ import sent
 import bytemailgui
 import webbrowser
 
-__version__ = "0.4.6"
+__version__ = "0.4.61"
 GUI = True
 
 class ByteMail:
