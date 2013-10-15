@@ -1,6 +1,8 @@
 import json
 import os
 
+__version__ = "1.0.0"
+
 class Connect:
 
     def __init__(self, db_file):
@@ -15,8 +17,12 @@ class Connect:
     def _load(self):
         if self.stale:
             with open(self.db, 'rb') as fp:
-                self.json_data = json.load(fp)
-
+                try:
+                    self.json_data = json.load(fp)
+                except:
+                    with open(self.db, 'wb') as file:
+                        file.write(json.dumps(self.json_data))
+                    self._load()
     def _save(self):
         with open(self.db, 'wb') as fp:
             json.dump(self.json_data, fp)
